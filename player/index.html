@@ -18,28 +18,29 @@
 <body class="bg-amber-50 min-h-screen flex flex-col items-center p-8 font-sans text-[0.9rem] leading-tight tracking-tight">
   <h1 class="text-lg font-bold uppercase tracking-wide mb-6">No Label Player</h1>
 
-  <div id="player" class="w-full max-w-lg bg-white border border-black p-6 shadow-sm">
-    <div id="browseNav" class="flex justify-center space-x-4 mb-4">
-      <button data-target="albums" class="px-2 py-1 border border-black active">Albums</button>
-      <button data-target="artists" class="px-2 py-1 border border-black">Artists</button>
-      <button data-target="playlists" class="px-2 py-1 border border-black">Playlists</button>
+  <div id="player" class="w-full max-w-lg md:max-w-2xl bg-white border border-black p-6 shadow-sm md:flex md:space-x-6">
+    <div id="catalogNav" class="md:w-1/2">
+      <div id="browseNav" class="flex justify-center space-x-4 mb-4">
+        <button data-target="albums" class="px-2 py-1 border border-black active">Albums</button>
+        <button data-target="artists" class="px-2 py-1 border border-black">Artists</button>
+        <button data-target="playlists" class="px-2 py-1 border border-black">Playlists</button>
+      </div>
+      <ul id="albumList" class="album-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
+      <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
+      <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
     </div>
-    <!-- lists -->
-    <ul id="albumList" class="album-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
-    <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
-    <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
-    <img id="coverImg" alt="Album cover" class="w-full mb-4 hidden" />
-    <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
-
-    <!-- controls -->
-    <div class="controls flex justify-center space-x-8 mt-4 mb-3">
-      <button id="prevBtn" aria-label="Previous track" class="p-1 hover:bg-black hover:text-white transition">Prev</button>
-      <button id="playPauseBtn" aria-label="Play / Pause" class="p-1 hover:bg-black hover:text-white transition">Play</button>
-      <button id="nextBtn" aria-label="Next track" class="p-1 hover:bg-black hover:text-white transition">Next</button>
+    <div id="nowPlayingSection" class="md:w-1/2 mt-6 md:mt-0">
+      <img id="coverImg" alt="Album cover" class="w-full mb-4 hidden" />
+      <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
+      <div class="controls flex justify-center space-x-8 mt-4 mb-3">
+        <button id="prevBtn" aria-label="Previous track" class="p-1 hover:bg-black hover:text-white transition">Prev</button>
+        <button id="playPauseBtn" aria-label="Play / Pause" class="p-1 hover:bg-black hover:text-white transition">Play</button>
+        <button id="nextBtn" aria-label="Next track" class="p-1 hover:bg-black hover:text-white transition">Next</button>
+      </div>
+      <div id="nowPlaying" class="text-center mb-2"></div>
+      <progress id="seekBar" value="0" max="100" aria-label="Playback position"></progress>
+      <audio id="audio"></audio>
     </div>
-    <div id="nowPlaying" class="text-center mb-2"></div>
-    <progress id="seekBar" value="0" max="100" aria-label="Playback position"></progress>
-    <audio id="audio"></audio>
   </div>
 
   <script>
