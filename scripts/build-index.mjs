@@ -8,6 +8,12 @@ const albums = [];
 const playlists = []; // you can add manual JSON playlists later
 
 async function walkCatalog() {
+  try {
+    await fs.access(CATALOG_DIR);
+  } catch {
+    console.warn('catalog/ directory not found; skipping');
+    return;
+  }
   const folders = await fs.readdir(CATALOG_DIR);
   for (const folder of folders) {
     const metaPath = path.join(CATALOG_DIR, folder, 'album.yaml');
@@ -15,10 +21,31 @@ async function walkCatalog() {
       const raw = await fs.readFile(metaPath, 'utf8');
       const meta = yaml.parse(raw);
       // convert track file → full src path
-      meta.tracks = meta.tracks.map(t => ({
-        ...t,
-        src: `${CATALOG_DIR}/${folder}/${t.file}`
-      }));
+      const processed = [];
+      for (const t of meta.tracks) {
+        let file = t.file;
+        if (!path.extname(file)) {
+          // if extension missing, prefer existing .mp3 or .wav
+          const mp3 = path.join(CATALOG_DIR, folder, `${file}.mp3`);
+          const wav = path.join(CATALOG_DIR, folder, `${file}.wav`);
+          try {
+            await fs.access(mp3);
+            file = `${file}.mp3`;
+          } catch {
+            try {
+              await fs.access(wav);
+              file = `${file}.wav`;
+            } catch {
+              // leave as is; resulting src may be broken
+            }
+          }
+        }
+        processed.push({
+          ...t,
+          src: `${CATALOG_DIR}/${folder}/${file}`
+        });
+      }
+      meta.tracks = processed;
       albums.push(meta);
     } catch (err) {
       console.warn('Skipping', folder, err.message);
