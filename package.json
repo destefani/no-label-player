@@ -1,0 +1,14 @@
+{
+  "name": "no-label-player",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-index.mjs",
+    "dev":  "npm run build && npx live-server player --open=.",
+    "verify": "bash scripts/verify.sh"
+  },
+  "dependencies": {
+    "yaml": "^2.4.2"
+  },
+  "license": "MIT"
+}
