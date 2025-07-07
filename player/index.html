@@ -16,7 +16,7 @@
   </style>
 </head>
 <body class="bg-amber-50 min-h-screen flex flex-col items-center p-8 font-sans text-[0.9rem] leading-tight tracking-tight">
-  <h1 class="text-lg font-bold uppercase tracking-wide mb-6">No Label Player</h1>
+  <h1 id="playerName" class="text-lg font-bold uppercase tracking-wide mb-6">No Label Player</h1>
 
   <div id="player" class="w-full max-w-lg md:max-w-2xl bg-white border border-black p-6 shadow-sm md:flex md:space-x-6">
     <div id="catalogNav" class="md:w-1/2">
@@ -49,9 +49,19 @@
       The file should be available next to index.html
       (copy build/catalog.json there during deploy)
     ========================================================= */
+    let config = { playerName: 'No Label Player' };
     let albums = [];
     let playlists = [];
     let artists = [];
+
+    fetch('config.json')
+      .then(r => (r.ok ? r.json() : {}))
+      .then(data => {
+        config = { ...config, ...data };
+        document.title = config.playerName;
+        document.getElementById('playerName').textContent = config.playerName;
+      })
+      .catch(() => {});
 
     fetch('catalog.json')
       .then(r => {

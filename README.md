@@ -18,7 +18,8 @@ A lightweight, self‑hosted web player for our record label — no accounts, no
 repo-root/
 │
 ├─ player/                # the HTML/CSS/JS UI
-│   └─ index.html
+│   ├─ index.html
+│   └─ config.json        # customize the player name
 │
 ├─ catalog/               # ALL audio & art live here (immutable)
 │   └─ 2025-07-demo-album/
@@ -50,6 +51,9 @@ npm run dev            # builds catalog.json, serves site on http://localhost:80
 # or run live-server manually from the repo root
 # npx live-server --open=player
 ```
+
+### Configuration
+Edit `player/config.json` to set the `playerName` that appears in the UI and browser title.
 
 ## ➕ Adding a new release
 
