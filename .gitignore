@@ -1,5 +1,6 @@
 node_modules/
 build/
 catalog/
+player/catalog.json
 .DS_Store
 *.log
