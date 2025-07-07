@@ -45,6 +45,10 @@ repo-root/
 git clone <repo-url> && cd <repo>
 npm ci
 npm run dev            # builds catalog.json, serves site on http://localhost:8080/player
+# (run from the repo root so /catalog is served)
+
+# or run live-server manually from the repo root
+# npx live-server --open=player
 ```
 
 ## ➕ Adding a new release
@@ -55,3 +59,7 @@ npm run dev            # builds catalog.json, serves site on http://localhost:80
 4. `git add . && git commit`
 
 CI / `npm run build` regenerates `build/catalog.json` for the player.
+## ❓ Troubleshooting
+If the player shows '?' icons instead of album art or audio won't play,
+make sure `live-server` is started from the repository root so the `catalog/` folder is served.
+
