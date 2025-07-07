@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-index.mjs",
-    "dev":  "npm run build && npx live-server player --open=.",
+    "dev":  "npm run build && npx live-server --open=player",
     "verify": "bash scripts/verify.sh"
   },
   "dependencies": {
