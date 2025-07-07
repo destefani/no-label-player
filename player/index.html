@@ -34,11 +34,11 @@
       <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
       <div class="controls flex justify-center space-x-8 mt-4 mb-3">
         <button id="prevBtn" aria-label="Previous track"
-          class="p-1 hover:bg-black hover:text-white transition">⏮</button>
+          class="p-1 hover:bg-black hover:text-white transition"></button>
         <button id="playPauseBtn" aria-label="Play / Pause"
-          class="p-1 hover:bg-black hover:text-white transition">▶</button>
+          class="p-1 hover:bg-black hover:text-white transition"></button>
         <button id="nextBtn" aria-label="Next track"
-          class="p-1 hover:bg-black hover:text-white transition">⏭</button>
+          class="p-1 hover:bg-black hover:text-white transition"></button>
       </div>
       <div id="nowPlaying" class="text-center mb-2"></div>
       <progress id="seekBar" value="0" max="100" aria-label="Playback position"></progress>
@@ -100,6 +100,38 @@
     const coverImg = document.getElementById("coverImg");
     const nowPlayingEl = document.getElementById("nowPlaying");
     const timeDisplay = document.getElementById("timeDisplay");
+
+    const iconPlay = `
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd"
+          d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712
+          1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+          clip-rule="evenodd" />
+      </svg>`;
+    const iconPause = `
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd"
+          d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5
+          a.75.75 0 0 1-.75-.75V5.25Z
+          m7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15
+          a.75.75 0 0 1-.75-.75V5.25Z"
+          clip-rule="evenodd" />
+      </svg>`;
+    const iconNext = `
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path
+          d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628
+          L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256
+          l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z" />
+      </svg>`;
+    const iconPrev = `
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path
+          d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715
+          2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029
+          v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256
+          l7.108 4.061Z" />
+      </svg>`;
 
     /* =========================================================
        State
@@ -204,16 +236,16 @@
       });
     }
 
-      function loadTrack(i) {
-        currentIndex = i;
-        const track = currentList[i];
-        if (!track) return;
-        audioEl.src = track.src;
-        timeDisplay.textContent = '0:00 / 0:00';
-        highlight(trackListEl, i);
-        nowPlayingEl.textContent = `${track.title} – ${track.artist} (${track.album})`;
-        if (isPlaying) audioEl.play();
-      }
+    function loadTrack(i) {
+      currentIndex = i;
+      const track = currentList[i];
+      if (!track) return;
+      audioEl.src = track.src;
+      highlight(trackListEl, i);
+      nowPlayingEl.textContent = `${track.title} – ${track.artist} (${track.album})`;
+      if (isPlaying) audioEl.play();
+      updateTime();
+    }
 
     function highlight(listEl, idx) {
       Array.from(listEl.children).forEach((li, i) => {
@@ -243,8 +275,8 @@
     prevBtn.onclick = () => currentIndex > 0 && loadTrack(currentIndex - 1);
     nextBtn.onclick = () => currentIndex < currentList.length - 1 && loadTrack(currentIndex + 1);
 
-      audioEl.onplay = () => { isPlaying = true; playPauseBtn.textContent = "⏸"; };
-      audioEl.onpause = () => { isPlaying = false; playPauseBtn.textContent = "▶"; };
+      audioEl.onplay = () => { isPlaying = true; playPauseBtn.innerHTML = iconPause; };
+      audioEl.onpause = () => { isPlaying = false; playPauseBtn.innerHTML = iconPlay; };
       audioEl.ontimeupdate = () => {
         seekBar.value = (audioEl.currentTime / audioEl.duration) * 100 || 0;
         updateTime();
@@ -261,6 +293,10 @@
        Boot – called after catalog loads
     ========================================================= */
     function boot() {
+      prevBtn.innerHTML = iconPrev;
+      nextBtn.innerHTML = iconNext;
+      playPauseBtn.innerHTML = iconPlay;
+      updateTime();
       renderArtists();
       renderAlbums();
       renderPlaylists();
