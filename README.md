@@ -50,7 +50,14 @@ npm run dev            # builds catalog.json, serves site on http://localhost:80
 
 # or run live-server manually from the repo root
 # npx live-server --open=player
+
+### Deploy locally
+Run the helper script to build the catalog and start a local server:
+
+```bash
+./scripts/local-deploy.sh
 ```
+Set `PORT` to change the default `8080` port.
 
 ### Configuration
 Edit `player/config.json` to set the `playerName` that appears in the UI and browser title.
