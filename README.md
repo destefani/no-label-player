@@ -24,7 +24,7 @@ repo-root/
 │   └─ 2025-07-demo-album/
 │       ├─ cover.jpg
 │       ├─ 01-track1.mp3
-│       ├─ 02-track2.mp3
+│       ├─ 02-track2.wav
 │       └─ album.yaml
 │
 ├─ scripts/
@@ -50,7 +50,7 @@ npm run dev            # builds catalog.json + serves site on http://localhost:8
 ## ➕ Adding a new release
 
 1. Create `catalog/YYYY-MM-album-slug/`
-2. Copy audio files (`01-track.mp3` …) and `cover.jpg`
+2. Copy audio files (`01-track.mp3` or `01-track.wav` …) and `cover.jpg`
 3. Write `album.yaml`
 4. `git add . && git commit`
 
