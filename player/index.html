@@ -18,8 +18,8 @@
 <body class="bg-amber-50 min-h-screen flex flex-col items-center p-8 font-sans text-[0.9rem] leading-tight tracking-tight">
   <h1 id="playerName" class="text-lg font-bold uppercase tracking-wide mb-6">No Label Player</h1>
 
-  <div id="player" class="w-full max-w-lg md:max-w-2xl bg-white border border-black p-6 shadow-sm md:flex md:space-x-6">
-    <div id="catalogNav" class="md:w-1/2">
+  <div id="player" class="w-full max-w-lg md:max-w-2xl bg-white border border-black p-6 shadow-sm md:flex md:space-x-6 md:divide-x md:divide-black">
+    <div id="catalogNav" class="md:w-1/2 md:pr-6">
       <div id="browseNav" class="flex justify-center space-x-4 mb-4">
         <button data-target="albums" class="px-2 py-1 border border-black active">Albums</button>
         <button data-target="artists" class="px-2 py-1 border border-black">Artists</button>
@@ -29,7 +29,7 @@
       <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
       <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
     </div>
-    <div id="nowPlayingSection" class="md:w-1/2 mt-6 md:mt-0">
+    <div id="nowPlayingSection" class="md:w-1/2 mt-6 md:mt-0 md:pl-6">
       <img id="coverImg" alt="Album cover" class="w-full mb-4 hidden" />
       <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
       <div class="controls flex justify-center space-x-8 mt-4 mb-3">
