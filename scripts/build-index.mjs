@@ -20,6 +20,19 @@ async function walkCatalog() {
     try {
       const raw = await fs.readFile(metaPath, 'utf8');
       const meta = yaml.parse(raw);
+      // ensure cover path is included
+      if (!meta.cover) {
+        // default to cover.jpg inside the folder
+        const defaultCover = path.join(CATALOG_DIR, folder, 'cover.jpg');
+        try {
+          await fs.access(defaultCover);
+          meta.cover = `${CATALOG_DIR}/${folder}/cover.jpg`;
+        } catch {
+          // leave undefined if not present
+        }
+      } else {
+        meta.cover = `${CATALOG_DIR}/${folder}/${meta.cover}`;
+      }
       // convert track file → full src path
       const processed = [];
       for (const t of meta.tracks) {

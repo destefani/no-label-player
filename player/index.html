@@ -22,6 +22,7 @@
     <!-- lists -->
     <ul id="albumList" class="album-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
     <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
+    <img id="coverImg" alt="Album cover" class="w-full mb-4 hidden" />
     <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
 
     <!-- controls -->
@@ -70,6 +71,7 @@
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const seekBar = document.getElementById("seekBar");
+    const coverImg = document.getElementById("coverImg");
 
     /* =========================================================
        State
@@ -106,6 +108,12 @@
     function loadAlbum(i) {
       currentList = albums[i].tracks;
       highlight(albumListEl, i);
+      if (albums[i].cover) {
+        coverImg.src = albums[i].cover;
+        coverImg.classList.remove('hidden');
+      } else {
+        coverImg.classList.add('hidden');
+      }
       trackListEl.scrollTop = 0;
       renderTrackList();
       loadTrack(0);
@@ -114,6 +122,7 @@
     function loadPlaylist(i) {
       currentList = playlists[i].tracks;
       highlight(playlistListEl, i);
+      coverImg.classList.add('hidden');
       trackListEl.scrollTop = 0;
       renderTrackList();
       loadTrack(0);
