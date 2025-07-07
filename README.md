@@ -44,7 +44,7 @@ repo-root/
 ```bash
 git clone <repo-url> && cd <repo>
 npm ci
-npm run dev            # builds catalog.json + serves site on http://localhost:8080
+npm run dev            # builds catalog.json, serves site on http://localhost:8080/player
 ```
 
 ## ➕ Adding a new release
