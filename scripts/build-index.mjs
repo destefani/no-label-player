@@ -26,12 +26,12 @@ async function walkCatalog() {
         const defaultCover = path.join(CATALOG_DIR, folder, 'cover.jpg');
         try {
           await fs.access(defaultCover);
-          meta.cover = `${CATALOG_DIR}/${folder}/cover.jpg`;
+          meta.cover = `/${CATALOG_DIR}/${folder}/cover.jpg`;
         } catch {
           // leave undefined if not present
         }
       } else {
-        meta.cover = `${CATALOG_DIR}/${folder}/${meta.cover}`;
+        meta.cover = `/${CATALOG_DIR}/${folder}/${meta.cover}`;
       }
       // convert track file → full src path
       const processed = [];
@@ -55,7 +55,7 @@ async function walkCatalog() {
         }
         processed.push({
           ...t,
-          src: `${CATALOG_DIR}/${folder}/${file}`
+          src: `/${CATALOG_DIR}/${folder}/${file}`
         });
       }
       meta.tracks = processed;
