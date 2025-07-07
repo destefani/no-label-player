@@ -17,7 +17,7 @@ async function walkCatalog() {
       // convert track file → full src path
       meta.tracks = meta.tracks.map(t => ({
         ...t,
-        src: `${folder}/${t.file}`
+        src: `${CATALOG_DIR}/${folder}/${t.file}`
       }));
       albums.push(meta);
     } catch (err) {
