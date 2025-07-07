@@ -6,6 +6,7 @@ const CATALOG_DIR = 'catalog';
 const BUILD_DIR = 'build';
 const albums = [];
 const playlists = []; // you can add manual JSON playlists later
+const artistsMap = new Map();
 
 async function walkCatalog() {
   try {
@@ -53,10 +54,19 @@ async function walkCatalog() {
             }
           }
         }
-        processed.push({
+        const track = {
           ...t,
-          src: `/${CATALOG_DIR}/${folder}/${file}`
-        });
+          src: `/${CATALOG_DIR}/${folder}/${file}`,
+          artist: t.artist || meta.artist || 'Unknown',
+          album: meta.title,
+          cover: meta.cover
+        };
+        processed.push(track);
+        const aName = track.artist;
+        if (!artistsMap.has(aName)) {
+          artistsMap.set(aName, { name: aName, tracks: [] });
+        }
+        artistsMap.get(aName).tracks.push(track);
       }
       meta.tracks = processed;
       albums.push(meta);
@@ -67,10 +77,13 @@ async function walkCatalog() {
 }
 
 await walkCatalog();
+const artists = Array.from(artistsMap.values()).sort((a, b) =>
+  a.name.localeCompare(b.name)
+);
 await fs.mkdir(BUILD_DIR, { recursive: true });
 await fs.writeFile(
   path.join(BUILD_DIR, 'catalog.json'),
-  JSON.stringify({ albums, playlists }, null, 2)
+  JSON.stringify({ albums, playlists, artists }, null, 2)
 );
 // during development we serve the player/ directory directly so copy
 // the generated index for convenience
