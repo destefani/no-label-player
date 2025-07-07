@@ -19,18 +19,23 @@
   <h1 class="text-lg font-bold uppercase tracking-wide mb-6">No Label Player</h1>
 
   <div id="player" class="w-full max-w-lg bg-white border border-black p-6 shadow-sm">
+    <div id="browseNav" class="flex justify-center space-x-4 mb-4">
+      <button data-target="albums" class="px-2 py-1 border border-black active">Albums</button>
+      <button data-target="artists" class="px-2 py-1 border border-black">Artists</button>
+      <button data-target="playlists" class="px-2 py-1 border border-black">Playlists</button>
+    </div>
     <!-- lists -->
-    <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
     <ul id="albumList" class="album-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
-    <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
+    <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
+    <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
     <img id="coverImg" alt="Album cover" class="w-full mb-4 hidden" />
     <ul id="trackList" class="track-list max-h-56 overflow-y-auto divide-y divide-black"></ul>
 
     <!-- controls -->
     <div class="controls flex justify-center space-x-8 mt-4 mb-3">
-      <button id="prevBtn" aria-label="Previous track" class="p-1 hover:bg-black hover:text-white transition">⏮</button>
-      <button id="playPauseBtn" aria-label="Play / Pause" class="p-1 hover:bg-black hover:text-white transition">▶️</button>
-      <button id="nextBtn" aria-label="Next track" class="p-1 hover:bg-black hover:text-white transition">⏭</button>
+      <button id="prevBtn" aria-label="Previous track" class="p-1 hover:bg-black hover:text-white transition">Prev</button>
+      <button id="playPauseBtn" aria-label="Play / Pause" class="p-1 hover:bg-black hover:text-white transition">Play</button>
+      <button id="nextBtn" aria-label="Next track" class="p-1 hover:bg-black hover:text-white transition">Next</button>
     </div>
     <div id="nowPlaying" class="text-center mb-2"></div>
     <progress id="seekBar" value="0" max="100" aria-label="Playback position"></progress>
@@ -70,6 +75,7 @@
     const albumListEl = document.getElementById("albumList");
     const artistListEl = document.getElementById("artistList");
     const playlistListEl = document.getElementById("playlistList");
+    const navBtns = document.querySelectorAll('#browseNav button');
     const trackListEl = document.getElementById("trackList");
     const audioEl = document.getElementById("audio");
     const playPauseBtn = document.getElementById("playPauseBtn");
@@ -85,6 +91,17 @@
     let currentList = [];
     let currentIndex = 0;
     let isPlaying = false;
+
+    navBtns.forEach(btn => {
+      btn.onclick = () => {
+        navBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.target;
+        albumListEl.classList.toggle('hidden', target !== 'albums');
+        artistListEl.classList.toggle('hidden', target !== 'artists');
+        playlistListEl.classList.toggle('hidden', target !== 'playlists');
+      };
+    });
 
     /* =========================================================
        Render helpers
@@ -104,7 +121,7 @@
       artistListEl.innerHTML = '';
       artists.forEach((artist, idx) => {
         const li = document.createElement('li');
-        li.textContent = '🎤 ' + artist.name;
+        li.textContent = artist.name;
         li.className = 'px-2 py-2 cursor-pointer hover:bg-black/5';
         li.onclick = () => loadArtist(idx);
         artistListEl.appendChild(li);
@@ -115,7 +132,7 @@
       playlistListEl.innerHTML = '';
       playlists.forEach((pl, idx) => {
         const li = document.createElement("li");
-        li.textContent = "★ " + pl.title;
+        li.textContent = pl.title;
         li.className = "px-2 py-2 cursor-pointer hover:bg-black/5";
         li.onclick = () => loadPlaylist(idx);
         playlistListEl.appendChild(li);
@@ -197,8 +214,8 @@
     prevBtn.onclick = () => currentIndex > 0 && loadTrack(currentIndex - 1);
     nextBtn.onclick = () => currentIndex < currentList.length - 1 && loadTrack(currentIndex + 1);
 
-    audioEl.onplay = () => { isPlaying = true; playPauseBtn.textContent = "⏸"; };
-    audioEl.onpause = () => { isPlaying = false; playPauseBtn.textContent = "▶️"; };
+    audioEl.onplay = () => { isPlaying = true; playPauseBtn.textContent = "Pause"; };
+    audioEl.onpause = () => { isPlaying = false; playPauseBtn.textContent = "Play"; };
     audioEl.ontimeupdate = () => { seekBar.value = (audioEl.currentTime / audioEl.duration) * 100 || 0; };
     audioEl.onended = () => nextBtn.click();
 
@@ -214,6 +231,7 @@
       renderArtists();
       renderAlbums();
       renderPlaylists();
+      if (albums.length) loadAlbum(0);
     }
   </script>
 </body>
