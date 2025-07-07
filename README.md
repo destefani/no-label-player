@@ -1,6 +1,8 @@
 # No Label Player
 
-A lightweight, self‑hosted web player for our record label — no accounts, no paywalls, just music. Drop it on any static host (Netlify, Vercel, S3 + CloudFront, GitHub Pages) and listeners can stream right away on desktop or mobile.
+A lightweight, self‑hosted web player for our record label — no accounts, no paywalls, just music.
+Drop it on any static host (Netlify, Vercel, S3 + CloudFront, GitHub Pages)
+ and listeners can stream right away on desktop or mobile.
 
 ## ✨ Features
 
