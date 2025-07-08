@@ -166,15 +166,16 @@
     /* =========================================================
        Render helpers
     ========================================================= */
-    function renderAlbums() {
+    function renderAlbums(indices = albums.map((_, i) => i)) {
       albumListEl.innerHTML = '';
-      albums.forEach((album, idx) => {
+      indices.forEach((idx, listIdx) => {
+        const album = albums[idx];
         const li = document.createElement('li');
         li.textContent = album.artist
           ? `${album.artist} - ${album.title}`
           : album.title;
         li.className = 'px-2 py-2 cursor-pointer hover:bg-black/5';
-        li.onclick = () => loadAlbum(idx);
+        li.onclick = () => loadAlbum(idx, listIdx);
         albumListEl.appendChild(li);
       });
     }
@@ -201,9 +202,9 @@
       });
     }
 
-    function loadAlbum(i) {
+    function loadAlbum(i, listIdx = i) {
       currentList = albums[i].tracks;
-      highlight(albumListEl, i);
+      highlight(albumListEl, listIdx);
       highlight(artistListEl, -1);
       highlight(playlistListEl, -1);
       if (albums[i].cover) {
@@ -218,14 +219,19 @@
     }
 
     function loadArtist(i) {
-      currentList = artists[i].tracks;
       highlight(artistListEl, i);
+      const indices = [];
+      albums.forEach((a, idx) => {
+        if (a.artist === artists[i].name) indices.push(idx);
+      });
+      renderAlbums(indices);
+      albumListEl.classList.remove('hidden');
       highlight(albumListEl, -1);
       highlight(playlistListEl, -1);
+      currentList = [];
+      trackListEl.innerHTML = '';
       coverImg.classList.add('hidden');
-      trackListEl.scrollTop = 0;
-      renderTrackList();
-      loadTrack(0);
+      nowPlayingEl.textContent = '';
     }
 
     function loadPlaylist(i) {
