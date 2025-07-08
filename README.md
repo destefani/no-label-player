@@ -61,6 +61,7 @@ Set `PORT` to change the default `8080` port.
 
 ### Configuration
 Edit `player/config.json` to set the `playerName` that appears in the UI and browser title.
+You can also specify a `backgroundImage` URL for a custom page backdrop.
 
 ## ➕ Adding a new release
 
