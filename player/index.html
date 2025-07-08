@@ -53,7 +53,7 @@
       The file should be available next to index.html
       (copy build/catalog.json there during deploy)
     ========================================================= */
-    let config = { playerName: 'No Label Player' };
+    let config = { playerName: 'No Label Player', backgroundImage: '' };
     let albums = [];
     let playlists = [];
     let artists = [];
@@ -64,6 +64,11 @@
         config = { ...config, ...data };
         document.title = config.playerName;
         document.getElementById('playerName').textContent = config.playerName;
+        if (config.backgroundImage) {
+          document.body.style.backgroundImage = `url(${config.backgroundImage})`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+        }
       })
       .catch(() => {});
 
