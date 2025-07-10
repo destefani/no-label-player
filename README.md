@@ -59,6 +59,14 @@ Run the helper script to build the catalog and start a local server:
 ```
 Set `PORT` to change the default `8080` port.
 
+### Share via Cloudflare Tunnel
+Expose the local server through a Cloudflare Tunnel:
+
+```bash
+./scripts/tunnel-deploy.sh
+```
+Requires `cloudflared` installed and in your `PATH`.
+
 ### Configuration
 Edit `player/config.json` to set the `playerName` that appears in the UI and browser title.
 You can also specify `backgroundImages`—an array of URLs—for a random page backdrop.

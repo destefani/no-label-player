@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node scripts/build-index.mjs",
     "dev":  "npm run build && npx live-server --open=player",
-    "verify": "bash scripts/verify.sh"
+    "verify": "bash scripts/verify.sh",
+    "tunnel": "bash scripts/tunnel-deploy.sh"
   },
   "dependencies": {
     "yaml": "^2.4.2"
