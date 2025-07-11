@@ -296,7 +296,12 @@
         updateTime();
       };
       audioEl.onloadedmetadata = updateTime;
-      audioEl.onended = () => nextBtn.click();
+      audioEl.onended = () => {
+        if (currentIndex < currentList.length - 1) {
+          loadTrack(currentIndex + 1);
+          audioEl.play();
+        }
+      };
 
     seekBar.onclick = (e) => {
       const rect = seekBar.getBoundingClientRect();
