@@ -10,4 +10,4 @@ if [ ! -d node_modules ]; then
 fi
 
 npm run build
-npx live-server --port="$PORT" --open=player .
+npx live-server --port="$PORT" --open= .
