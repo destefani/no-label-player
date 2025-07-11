@@ -25,8 +25,11 @@
         <button data-target="artists" class="px-2 py-1 border border-black">Artists</button>
         <button data-target="playlists" class="px-2 py-1 border border-black">Playlists</button>
       </div>
+      <h2 id="albumHeading" class="font-bold mb-1">Albums</h2>
       <ul id="albumList" class="album-list mb-4 max-h-40 overflow-y-auto divide-y divide-black"></ul>
+      <h2 id="artistHeading" class="font-bold mb-1 hidden">Artists</h2>
       <ul id="artistList" class="artist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
+      <h2 id="playlistHeading" class="font-bold mb-1 hidden">Playlists</h2>
       <ul id="playlistList" class="playlist-list mb-4 max-h-40 overflow-y-auto divide-y divide-black hidden"></ul>
     </div>
     <div id="nowPlayingSection" class="md:w-1/2 mt-6 md:mt-0">
@@ -99,9 +102,12 @@
     /* =========================================================
        DOM refs
     ========================================================= */
-    const albumListEl = document.getElementById("albumList");
-    const artistListEl = document.getElementById("artistList");
-    const playlistListEl = document.getElementById("playlistList");
+    const albumHeading = document.getElementById('albumHeading');
+    const artistHeading = document.getElementById('artistHeading');
+    const playlistHeading = document.getElementById('playlistHeading');
+    const albumListEl = document.getElementById('albumList');
+    const artistListEl = document.getElementById('artistList');
+    const playlistListEl = document.getElementById('playlistList');
     const navBtns = document.querySelectorAll('#browseNav button');
     const trackListEl = document.getElementById("trackList");
     const audioEl = document.getElementById("audio");
@@ -157,8 +163,12 @@
         navBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const target = btn.dataset.target;
+        albumHeading.textContent = 'Albums';
+        albumHeading.classList.toggle('hidden', target !== 'albums');
         albumListEl.classList.toggle('hidden', target !== 'albums');
+        artistHeading.classList.toggle('hidden', target !== 'artists');
         artistListEl.classList.toggle('hidden', target !== 'artists');
+        playlistHeading.classList.toggle('hidden', target !== 'playlists');
         playlistListEl.classList.toggle('hidden', target !== 'playlists');
         if (target === 'albums') renderAlbums();
         if (target === 'artists') renderArtists();
@@ -238,7 +248,10 @@
       highlight(artistListEl, i);
       highlight(albumListEl, -1);
       highlight(playlistListEl, -1);
+      albumHeading.textContent = `Albums – ${artists[i].name}`;
+      albumHeading.classList.remove('hidden');
       albumListEl.classList.remove('hidden');
+      playlistHeading.classList.add('hidden');
       playlistListEl.classList.add('hidden');
       renderArtistAlbums(artists[i].name);
       coverImg.classList.add('hidden');
