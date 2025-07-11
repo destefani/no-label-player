@@ -17,9 +17,8 @@ A lightweight, self‑hosted web player for our record label — no accounts, no
 ```
 repo-root/
 │
-├─ player/                # the HTML/CSS/JS UI
-│   ├─ index.html
-│   └─ config.json        # customize the player name
+├─ index.html             # the HTML/CSS/JS UI
+├─ config.json            # customize the player name
 │
 ├─ catalog/               # ALL audio & art live here (immutable)
 │   └─ 2025-07-demo-album/
@@ -45,11 +44,11 @@ repo-root/
 ```bash
 git clone <repo-url> && cd <repo>
 npm ci
-npm run dev            # builds catalog.json, serves site on http://localhost:8080/player
+npm run dev            # builds catalog.json, serves site on http://localhost:8080
 # (run from the repo root so /catalog is served)
 
 # or run live-server manually from the repo root
-# npx live-server --open=player
+# npx live-server
 
 ### Deploy locally
 Run the helper script to build the catalog and start a local server:
@@ -60,7 +59,7 @@ Run the helper script to build the catalog and start a local server:
 Set `PORT` to change the default `8080` port.
 
 ### Configuration
-Edit `player/config.json` to set the `playerName` that appears in the UI and browser title.
+Edit `config.json` to set the `playerName` that appears in the UI and browser title.
 You can also specify `backgroundImages`—an array of URLs—for a random page backdrop.
 
 ## ➕ Adding a new release
