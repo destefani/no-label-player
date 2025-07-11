@@ -195,15 +195,15 @@
 
     function renderArtistAlbums(name) {
       albumListEl.innerHTML = '';
-      const artistAlbums = albums
-        .map((a, idx) => ({ ...a, idx }))
-        .filter(a => a.artist === name);
-      artistAlbums.forEach((a, liIdx) => {
+      let liIdx = 0;
+      albums.forEach((album, idx) => {
+        if (album.artist !== name) return;
         const li = document.createElement('li');
-        li.textContent = a.artist ? `${a.artist} - ${a.title}` : a.title;
+        li.textContent = album.artist ? `${album.artist} - ${album.title}` : album.title;
         li.className = 'px-2 py-2 cursor-pointer hover:bg-black/5';
-        li.onclick = () => loadAlbum(a.idx, liIdx);
+        li.onclick = () => loadAlbum(idx, liIdx);
         albumListEl.appendChild(li);
+        liIdx += 1;
       });
     }
 
