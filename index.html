@@ -61,43 +61,48 @@
     let playlists = [];
     let artists = [];
 
-    fetch('config.json')
-      .then(r => (r.ok ? r.json() : {}))
-      .then(data => {
-        config = { ...config, ...data };
-        document.title = config.playerName;
-        document.getElementById('playerName').textContent = config.playerName;
-        let bg = '';
-        if (Array.isArray(config.backgroundImages) && config.backgroundImages.length) {
-          const idx = Math.floor(Math.random() * config.backgroundImages.length);
-          bg = config.backgroundImages[idx];
-        } else if (config.backgroundImage) {
-          bg = config.backgroundImage;
-        }
-        if (bg) {
-          document.body.style.backgroundImage = `url(${bg})`;
-          document.body.style.backgroundSize = 'cover';
-          document.body.style.backgroundPosition = 'center';
-        }
-      })
-      .catch(() => {});
+    function loadConfig() {
+      return fetch('config.json')
+        .then(r => (r.ok ? r.json() : {}))
+        .then(data => {
+          config = { ...config, ...data };
+          document.title = config.playerName;
+          document.getElementById('playerName').textContent = config.playerName;
+          let bg = '';
+          if (Array.isArray(config.backgroundImages) && config.backgroundImages.length) {
+            const idx = Math.floor(Math.random() * config.backgroundImages.length);
+            bg = config.backgroundImages[idx];
+          } else if (config.backgroundImage) {
+            bg = config.backgroundImage;
+          }
+          if (bg) {
+            document.body.style.backgroundImage = `url(${bg})`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+          }
+        })
+        .catch(() => {});
+    }
 
-    fetch('catalog.json')
-      .then(r => {
-        if (!r.ok) throw new Error('catalog.json not found');
-        return r.json();
-      })
-      .then(data => {
-        albums = data.albums || [];
-        playlists = data.playlists || [];
-        artists = data.artists || [];
-        boot();
-      })
-      .catch(err => {
-        console.error(err);
-        // graceful fallback – empty lists, show message
-        document.getElementById('albumList').innerHTML = '<li class="px-2 py-2 text-red-600">catalog.json missing</li>';
-      });
+    function loadCatalog() {
+      return fetch('catalog.json')
+        .then(r => {
+          if (!r.ok) throw new Error('catalog.json not found');
+          return r.json();
+        })
+        .then(data => {
+          albums = data.albums || [];
+          playlists = data.playlists || [];
+          artists = data.artists || [];
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('albumList').innerHTML =
+            '<li class="px-2 py-2 text-red-600">catalog.json missing</li>';
+        });
+    }
+
+    loadConfig().then(() => loadCatalog().then(boot));
 
     /* =========================================================
        DOM refs
