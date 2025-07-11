@@ -85,10 +85,11 @@ await fs.writeFile(
   path.join(BUILD_DIR, 'catalog.json'),
   JSON.stringify({ albums, playlists, artists }, null, 2)
 );
-// during development we serve the player/ directory directly so copy
-// the generated index for convenience
+// during development the player runs from the repo root so copy
+// the generated index there for convenience
 await fs.copyFile(
   path.join(BUILD_DIR, 'catalog.json'),
-  path.join('player', 'catalog.json')
+  'catalog.json'
 );
 console.log('✓ build/catalog.json generated');
+
