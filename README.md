@@ -43,9 +43,11 @@ repo-root/
 
 ```bash
 git clone <repo-url> && cd <repo>
-npm ci
-npm run dev            # builds catalog.json, serves site on http://localhost:8080
+npm run dev            # installs deps on first run, builds catalog.json, serves site on http://localhost:8080
 # (run from the repo root so /catalog is served)
+
+# or just set up dependencies and run checks
+# npm run setup
 
 # or run live-server manually from the repo root
 # npx live-server
