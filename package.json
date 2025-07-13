@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-index.mjs",
-    "dev":  "npm run build && npx live-server --open=",
+    "setup": "bash scripts/setup.sh",
+    "dev":  "npm run setup && npm run build && npx live-server --open=",
     "verify": "bash scripts/verify.sh"
   },
   "dependencies": {
